@@ -1,0 +1,4 @@
+Artsy Client app
+
+Client Id	    7a3721ec141b22852f02
+Client Secret	
