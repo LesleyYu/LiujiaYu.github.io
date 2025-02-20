@@ -54,9 +54,9 @@ def get_artsy_token():
 
 
 # search artist
-@app.route('/search', methods=['GET'])
-def search_artists():
-    query = request.args.get("query", "").strip()   # !! this request keyword?
+@app.route('/search/<query>', methods=['GET'])
+def search_artists(query):
+    # query = request.args.get("query", "").strip()   # !! this request keyword?
 
     artsy_token = get_artsy_token()
     artsy_token = ARTSY_TOKEN

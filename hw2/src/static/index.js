@@ -41,7 +41,8 @@ function fetchSearchResults(query) {
     const loading = document.getElementById("loading-container");
     loading.style.display = "block";    // show loading gif
 
-    fetch(`/search?query=${encodeURIComponent(query)}`)
+    // fetch(`/search?query=${encodeURIComponent(query)}`)
+    fetch(`/search/${encodeURIComponent(query)}`)
     .then(response => response.json())
     .then(data => {
         loading.style.display = "none"; // hide loading gif
