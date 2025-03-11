@@ -35,7 +35,7 @@ def get_files(name):
 
 ARTSY_CLIENT_ID	= "7a3721ec141b22852f02"
 ARTSY_CLIENT_SECRET = "bd9624b2469cdfd3edbf575b9fc0855b"
-ARTSY_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsInN1YmplY3RfYXBwbGljYXRpb24iOiIwMmE4NWU5Zi1kNWYxLTRiOGItOTgzOS1kMmJmYTg2ODE3MTkiLCJleHAiOjE3NDAyNzI3MzEsImlhdCI6MTczOTY2NzkzMSwiYXVkIjoiMDJhODVlOWYtZDVmMS00YjhiLTk4MzktZDJiZmE4NjgxNzE5IiwiaXNzIjoiR3Jhdml0eSIsImp0aSI6IjY3YjEzOWRiYTUyMmNiMzJmMzg0MWFkYSJ9.KvKE1WOh4pzgsng0ewOL3XhnkCDEpXUZAXnda8W1YTY"
+# ARTSY_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsInN1YmplY3RfYXBwbGljYXRpb24iOiIwMmE4NWU5Zi1kNWYxLTRiOGItOTgzOS1kMmJmYTg2ODE3MTkiLCJleHAiOjE3NDAyNzI3MzEsImlhdCI6MTczOTY2NzkzMSwiYXVkIjoiMDJhODVlOWYtZDVmMS00YjhiLTk4MzktZDJiZmE4NjgxNzE5IiwiaXNzIjoiR3Jhdml0eSIsImp0aSI6IjY3YjEzOWRiYTUyMmNiMzJmMzg0MWFkYSJ9.KvKE1WOh4pzgsng0ewOL3XhnkCDEpXUZAXnda8W1YTY"
 
 # get Artsy API access token
 def get_artsy_token():
@@ -59,7 +59,7 @@ def search_artists(query):
     # query = request.args.get("query", "").strip()   # !! this request keyword?
 
     artsy_token = get_artsy_token()
-    artsy_token = ARTSY_TOKEN
+    # artsy_token = ARTSY_TOKEN
     # make request ot Artsy API
     url = f"https://api.artsy.net/api/search?q={query}&size=10&type=artist"
     headers = {
