@@ -1,0 +1,12 @@
+**/.DS_Store
+**/node_modules
+**/.github
+**/*.txt
+**/package-lock.json
+**/build
+
+**/prompts*
+
+**/*depr*
+
+**/*test*
