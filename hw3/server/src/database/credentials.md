@@ -12,5 +12,5 @@ K??
 connection string:
 
 ```
-mongodb+srv://liujiay:Kes\?\?17kot7adf@cluster0.g6whbar.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+mongodb+srv://<liujiay>:<my psw>@cluster0.g6whbar.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 ```

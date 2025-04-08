@@ -72,7 +72,7 @@ async function searchArtist(req, res) {
   }
 }
 
-async function getArtistDetails(req, res) {
+async function getArtistDetail(req, res) {
   const id = req.params.id;
   const token = await getArtsyToken();
   if (!token) {
@@ -86,20 +86,22 @@ async function getArtistDetails(req, res) {
     });
     if (response.ok) {
       const data = await response.json();
-      const filteredData = {
-        name: data.name,
-        birthday: data.birthday,
-        deathday: data.deathday,
-        nationality: data.nationality,
-        biography: data.biography
-      };
-      res.json(filteredData);
+      // const filteredData = {
+      //   name: data.name,
+      //   birthday: data.birthday,
+      //   deathday: data.deathday,
+      //   nationality: data.nationality,
+      //   biography: data.biography
+      //   bioUrl: ...
+      // };
+      // res.json(filteredData);
+      res.json(data);
     } else {
       const errorText = await response.text();
       res.status(response.status).json({ error: 'Failed to fetch data', details: errorText });
     }
   } catch (error) {
-    console.error('Error in getArtistDetails:', error);
+    console.error('Error in getArtistDetail:', error);
     res.status(500).json({ error: 'Failed to fetch data', details: error.toString() });
   }
 }
@@ -223,7 +225,7 @@ async function getGenes(req, res) {
 
 module.exports = {
   searchArtist,
-  getArtistDetails,
+  getArtistDetail,
   getSimilarArtists,
   getArtworks,
   getGenes

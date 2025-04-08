@@ -1,0 +1,78 @@
+@import './variables';
+
+// Custom global styles
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+// ==== Home ====
+
+// ---- Search Bar ----
+.btn.btn-primary.search-btn {
+  background-color: #224c8c !important;
+}
+
+
+
+// ---- Search Results (Cards) ----
+.myCard {
+  min-width: 200px !important;  // if the class is not defined in bootstrap, you need to use !important
+  cursor: pointer !important;
+  &:hover {
+    background-color: rgb(47, 118, 179) !important;
+  }
+}
+
+.myCard.active-card {   // why?
+  background-color: #205375 !important;
+}
+
+// ---- Artist Info ----
+#info-spinner { // .spinner-border {
+  color: #205375;
+}
+
+.container-fluid .container .nav.nav-pills.nav-fill  {
+  button.nav-link {
+    color: #205375
+  }
+  button.nav-link.active {
+    background-color: #205375;
+    color: white;
+  }
+}
+
+
+
+// ---- Footer ----
+.footer {
+  position: fixed;  // not absolute. If absolute, the footer scrolled with the content when height grows
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  // height: 30px;  // no need. set class to py-2 instead of py-3 makes it smaller
+  z-index: 100;
+  background-color: rgb(10, 26, 36);
+  color: #ffffff;
+  font-size: 14px;
+
+  .footer-link {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .footer-logo {
+    height: 20px; // Adjust as needed
+    width: auto;
+  }
+}

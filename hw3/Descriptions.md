@@ -1,9 +1,9 @@
 ## 4-6 Authentication
 
-The project should support two types of clients: Guests and Authenticated users. Part of the functionality will be available (and visible) only to users that are logged in. In short, authenticated users can (in addition to guest users’ privileges):
+The project should support two types of clients: Guests and Authenticated users. **Part of the functionality will be available (and visible) only to users that are logged in. In short, authenticated users can (in addition to guest users’ privileges):**
 
-1) See "similar artists" section
-2) Have a favorite list of artists (separate favorites page and add/remove buttons)
+1) **See "similar artists" section**
+2) **Have a favorite list of artists (separate favorites page and add/remove buttons)**
 
 You will need to implement 4 actions (endpoints):
 
@@ -52,7 +52,7 @@ The login page (and the menu) should be available to unauthenticated users only.
 
 Form validation and behavior should be like the form described in the "Registration Procedure" section – all fields are required, email should be valid, "Login" button should be disabled until there are no validation errors.
 
-On a successful login, the frontend should redirect the user to the Search page and change the visual appearance of all elements according to a new auth state (described below).
+**On a successful login, the frontend should redirect the user to the Search page and change the visual appearance of all elements according to a new auth state (described below).**
 
 The Register link should lead to the **registration page**.
 
@@ -82,7 +82,7 @@ page is refreshed, the frontend should be able to restore that data. There could
 
 This project allows authenticated users to store a list of favorite artists. The backend should keep this list associated with user (and store it in the database) and support the following actions:
 
-1) Adding an artist to the user’s favorites list
+1) Adding an artist to the user’s favorites list      // 我靠 注意： 我的 addFavorite 方法里面 req.body 里要传入的信息是从 search artist 里面来的。直接全都对上了
 2) Removing an artist from the user’s favorite list
 3) Retrieving user’s favorites
 
@@ -92,7 +92,7 @@ The list should be deleted once the user is deleted.
 
 This list should be returned along with the user profile. i.e., the frontend should have this list (and maintain its consistency) as soon as possible to correctly display artists' state on the screen.
 
-## 4-8 Page Layout (front-end)
+## 4-8 Page Layout
 
 The page contains a header section, a content section and a footer section arranged vertically.
 
@@ -102,7 +102,7 @@ Profile dropdown consists of a static part and a dropdown itself. Static part sh
 
 The content section contains the contents of the page, in which the following features will be shown.
 
-## 4-9 Search Form (front-end)
+## 4-9 Search Form
 
 When a user opens the page for the first time, only a search form (Use Bootstrap Forms) is shown in the content section. Search form contains three items: an input section, a search button and a clear button.
 
@@ -126,7 +126,7 @@ When a card is hovered, its background color changes as shown below.
 
 When the user is authenticated, the artist card should contain a button with a star icon. If the artist is not in favorites, the star should have no fill. If the artist is in favorites, the star should have a yellow fill. Click on the button toggles the state – adds and removes an artist to/from favorites. This change should be reflected immediately everywhere it is shown (for example, in the Artist Info tab) and trigger the notification logic described in the favorites section below.
 
-**When an artist card is clicked, your frontend will do an AJAX call to your backend to get artist details. To get artist details, you must send an artist ID to the backend. For that, you must associate artist IDs with cards, which you can do during initial search by sending artist IDs from your backend to the frontend as a part of the response.** Detail view will contain two tabs – "Artist Info" (Selected by default) and "Artworks" Until a response is received from the backend, a spinner is shown for both tabs.
+When an artist card is clicked, your frontend will do an AJAX call to your backend to get artist details. To get artist details, you must send an artist ID to the backend. For that, you must associate artist IDs with cards, which you can do during initial search by sending artist IDs from your backend to the frontend as a part of the response. Detail view will contain two tabs – "Artist Info" (Selected by default) and "Artworks" Until a response is received from the backend, a spinner is shown for both tabs.
 
 ## 4-11 Artist Details (front-end)
 
@@ -142,13 +142,13 @@ This information corresponds to ["name"], ["birthday"], ["deathday"], ["national
 
 If content does not fit the screen, the whole page should be scrollable.
 
-Open description (tabs and their contents) should be restored after the page refresh, however search results should hide, and search input should reset. You should design and implement it the way, one may easily share the description with others (e.g. via socials) by url only (the page url should contain enough information for frontend to restore the page state).
+**Open description (tabs and their contents) should be restored after the page refresh, however search results should hide, and search input should reset. You should design and implement it the way, one may easily share the description with others (e.g. via socials) by url only (the page url should contain enough information for frontend to restore the page state).**
 
-For authenticated users there are two main changes – a "star" button and similar artist section.
+**For authenticated users there are two main changes – a "star" button and similar artist section.**
 
-The "star" button should behave like the "star" button on an artist card.
+**The "star" button should behave like the "star" button on an artist card.**
 
-Under the description with biography there should be a block titled "Similar Artists". Please use the corresponding artsy endpoint to get the list from your backend. Similar artists should be displayed in the form of cards that should look and behave exactly as artist cards in the search result section. You can use the same frontend components. Upon click (except on the star button), they should change the content of sections above to the artist from the card. Leave search results unchanged (but reset selected state if description does not match the artist currently being displayed).
+**Under the description with biography there should be a block titled "Similar Artists". Please use the corresponding artsy endpoint to get the list from your backend. Similar artists should be displayed in the form of cards that should look and behave exactly as artist cards in the search result section. You can use the same frontend components. Upon click (except on the star button), they should change the content of sections above to the artist from the card. Leave search results unchanged (but reset selected state if description does not match the artist currently being displayed).**
 
 ### 4-11-2 Artworks Tab
 
@@ -180,34 +180,34 @@ The clear button of the search form brings the page to its initial state. It cle
 
 ## 4-13 Favorites page
 
-This page is only available to authenticated users.
+**This page is only available to authenticated users.**
 
-While loading, a spinner should be shown. To improve user experience, the list of favorite artists should be maintained, so on navigation from another screen, there should be no loading from the server, hence no spinner. The loading should only occur on page (full) reload.
+**While loading, a spinner should be shown. To improve user experience, the list of favorite artists should be maintained, so on navigation from another screen, there should be no loading from the server, hence no spinner. The loading should only occur on page (full) reload.**
 
-If there are no artist in favorites, a "No favorite artists" message should be shown.
+**If there are no artist in favorites, a "No favorite artists" message should be shown.**
 
-If there are some artists in the list, they should be displayed as cards in the "newest first" order.
+**If there are some artists in the list, they should be displayed as cards in the "newest first" order.**
 
-The Favorite artist card should contain the following information: full name, dates of birth and death, nationality, interactive timer representing relative time of when the artist was added to the favorites and a blurred background image (the same image used on artist card in search results or in the similar artists list).
+**The Favorite artist card should contain the following information: full name, dates of birth and death, nationality, interactive timer representing relative time of when the artist was added to the favorites and a blurred background image (the same image used on artist card in search results or in the similar artists list).**
 
-The Interactive timer is a relative time expressed with words which is auto updated. Some examples: for less than a minute, display "1 second ago"/"n seconds ago"; for more than a minute, but less than an hour display "1 minute ago" / "n minutes ago", etc.
+**The Interactive timer is a relative time expressed with words which is auto updated. Some examples: for less than a minute, display "1 second ago"/"n seconds ago"; for more than a minute, but less than an hour display "1 minute ago" / "n minutes ago", etc.**
 
-The Card should support two interactions:
+**The Card should support two interactions:**
 
-1) On "Remove" button click artist should be removed from the favorites list
-2) On card click (except on "remove" button) user should be navigated to the "Artist Details" page with the artist being displayed. Search bar should be empty and there should be no search results. Both tabs should behave identically as they behave after artist details are being shown after search and select.
+1) **On "Remove" button click artist should be removed from the favorites list**
+2) **On card click (except on "remove" button) user should be navigated to the "Artist Details" page with the artist being displayed. Search bar should be empty and there should be no search results. Both tabs should behave identically as they behave after artist details are being shown after search and select.**
 
 ## 4-14 Notifications
 
-Application should show confirmation in form of a top-right corner stackable notification for the following actions (with corresponding text and bootstrap style):
+**Application should show confirmation in form of a top-right corner stackable notification for the following actions (with corresponding text and bootstrap style):**
 
-1) add to favorites – "Added to favorites" (style = success)
-2) remove from favorites – "Removed from favorites" (style = danger)
-3) logout – "Logged out" (style = success)
-4) profile deletion – "Account deleted" (style = danger)
+1) **add to favorites – "Added to favorites" (style = success)**
+2) **remove from favorites – "Removed from favorites" (style = danger)**
+3) **logout – "Logged out" (style = success)**
+4) **profile deletion – "Account deleted" (style = danger)**
 
-Notifications should be shown regardless of where the action has been made. These notifications should be visible for 3 seconds and automatically removed afterwards. In addition user may click "X" button on the right part of the notification to manually remove it. Notifications should stack vertically with the last notification triggered being on the bottom of the stack and the earliest being on the top. The stack grows from the top to the bottom of the page and persists between page navigations (not page reloads).
+**Notifications should be shown regardless of where the action has been made. These notifications should be visible for 3 seconds and automatically removed afterwards. In addition user may click "X" button on the right part of the notification to manually remove it. Notifications should stack vertically with the last notification triggered being on the bottom of the stack and the earliest being on the top. The stack grows from the top to the bottom of the page and persists between page navigations (not page reloads).**
 
 ## Responsive Design (front-end)
 
-The webpage you develop must be responsive. All functions should work on mobile devices.
+**The webpage you develop must be responsive. All functions should work on mobile devices.**
