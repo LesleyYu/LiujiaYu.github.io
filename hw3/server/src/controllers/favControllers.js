@@ -15,7 +15,7 @@ async function getFavorites(req, res) {
 }
 
 // add an artist to favorites
-async function addFavorite(req, res) {
+async function addFavorite(req, res) {  // 我靠 注意： 这个方法里面 req.body 里要传入的信息是从 search artist 里面来的。直接全都对上了
   const { artistId } = req.params;
   const { title, bioUrl, imgUrl } = req.body;
   if (!artistId || !title) {

@@ -5,8 +5,11 @@
 **/package-lock.json
 **/build
 
-**/prompts*
+**/prompts.*
 
 **/*depr*
 
 **/*test*
+
+**/client_a/
+**/client_b/
