@@ -7,7 +7,8 @@ var logger = require('morgan');
 var app = express();
 
 // Load environment variables
-require('dotenv').config();
+// require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 
 // ====== MongoDB Integration ======
@@ -66,8 +67,20 @@ app.use('/user', apiRouter);
 
 // // The "catchall" handler: for any request that doesn't match an API route, send back React's index.html file.
 // app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+//   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 // });
+// const PORT = process.env.PORT || 8080;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Serve static files from the "public" directory within the server folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// "Catchall" route: for any request that doesn’t match an API route,
+// send back React's index.html file from the "public" folder.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // ====== Static File Routes end ===== 
 
 
@@ -86,5 +99,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+if (require.main === module) {
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
+}
 
 module.exports = app;

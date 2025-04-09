@@ -3,8 +3,15 @@ import { Artist, searchArtist } from '../utils/api';
 import SearchBar from '../components/SearchBar';
 import SearchResults from '../components/SearchResults';
 import ArtistDetails from '../components/ArtistDetails';
+import { useLocation } from 'react-router-dom'; // todo: ArtistDetail Page
+
 
 const Home = () => {
+   // todo: ArtistDetail Page
+  const location = useLocation();
+  // Optionally retrieve state passed along when returning from navigating
+  const searchState = location.state as { artists?: any[], searchInitiated?: boolean } | undefined;
+
   const [artists, setArtists] = useState<Artist[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchInitiated, setSearchInitiated] = useState(false);
@@ -33,24 +40,26 @@ const Home = () => {
           setArtists([]); 
           setSearchInitiated(false); 
           setArtistId(null); }
-        } 
+        }
       />
 
       {
-        loading ? 
-        < ></> : 
-        <SearchResults 
-          artists={artists} 
-          searchInitiated={searchInitiated}
-          setArtistId={setArtistId}
-        />
-      }
+        loading ? null : (
+          // // Only render search results if there is no navigation state or if you want always
+           // todo: ArtistDetail Page
+          !searchState && (
+          <SearchResults 
+            artists={artists} 
+            searchInitiated={searchInitiated}
+            setArtistId={setArtistId}
+          />
+        )
+      )}
 
-      {
-        artistId ? 
-        <ArtistDetails artistId={artistId} />: 
-        <></>
-      }
+      {/* {artistId && ( */}
+      {artistId && !searchState && (
+        <ArtistDetails artistId={artistId} />
+      )}
     </div>
   );
 };
