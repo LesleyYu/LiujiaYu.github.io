@@ -32,9 +32,11 @@ const ArtistDetails: React.FC<ArtistDetailProps> = ({ artistId }) => {
         <Container fluid className="d-flex flex-column min-vh-100 pb-5">
             <Container className="my-3 text-start">
                 {loading ? (
-                    <Spinner id="info-spinner" animation="border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </Spinner>
+                    <div className=' d-flex justify-content-center'>
+                        <Spinner id="info-spinner" animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    </div>
                 ) : (
                     artistInfo && (
                         <Tabs defaultActiveKey="artistInfo" fill variant="pills" className="mb-3">
@@ -49,41 +51,6 @@ const ArtistDetails: React.FC<ArtistDetailProps> = ({ artistId }) => {
                 )}
             </Container>
         </Container>
-    // <Container fluid className="d-flex flex-column min-vh-100 pb-5">
-    //     <Container className="my-3 text-start d-flex justify-content-center">
-    //         {loading ? (
-    //             <Spinner id="info-spinner" animation="border" role="status">
-    //                 <span className="visually-hidden">Loading...</span>
-    //             </Spinner>
-    //         ) : artistInfo ? (
-    //             <Tabs defaultActiveKey="bio" id="artist-info-tabs" className="mb-3">
-    //                 <Tab eventKey="bio" title="Artist Info">
-    //                     <ArtistInfo artistInfo={artistInfo} />
-    //                 </Tab>
-    //                 <Tab eventKey="artwork" title="Artworks">
-    //                     <Artworks artistId={artistId} />
-    //                 </Tab>
-    //             </Tabs>
-
-    //         ) : (
-    //             <></>
-    //         )}
-    //     </Container>
-    // </Container>
-
-
-    // <>
-    //     {loading ? (
-    //         <Spinner id="info-spinner" animation="border" role="status">
-    //             <span className="visually-hidden">Loading...</span>
-    //         </Spinner>
-    //     ) : (
-    //         <>
-    //             {artistInfo ? <ArtistInfo artistInfo={artistInfo} /> : <></>}
-    //             <Artworks artistId={artistId} />
-    //         </>
-    //     )}
-    // </>
     );
 };
 

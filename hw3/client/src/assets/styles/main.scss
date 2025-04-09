@@ -7,6 +7,12 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+// ==== NavBar ===
+
+#basic-navbar-nav .ms-auto.navbar-nav.nav-pills .nav-link.active {
+  background-color: #224c8c;
+  color: white;
+}
 
 // ==== Home ====
 

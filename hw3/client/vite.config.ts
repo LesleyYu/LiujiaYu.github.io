@@ -27,6 +27,38 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
+
+      // --- auth ---
+      '/user/login': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/user/logout': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/user/register': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/user/delete-account': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/user/me': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+
+      // --- favs ---
+      '/user/favorites': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      // '/user/favorites/:artistId': {
+      //   target: 'http://localhost:3000',
+      //   changeOrigin: true,
+      // }
     },
   },
 })

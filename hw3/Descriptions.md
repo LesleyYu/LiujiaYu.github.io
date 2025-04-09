@@ -37,10 +37,9 @@ After the user’s information is inserted in the database, we need to create an
 The **registration** page should be available to unauthenticated users only.
 
 The form should have validation – all fields are required (use the REQUIRED attribute).
-The *email* field should contain a valid email address. This validation should be performed on the client (use the PATTERN attribute). Additionally, validation errors coming from the backend should also be shown under a corresponding field. Validation errors disappear once the field value has been modified (and does not contain a frontend-checked error anymore). The "Register"
-action button should be disabled while the form is empty or contains validation errors.
+The *email* field should contain a valid email address. This validation should be performed on the client (use the PATTERN attribute). Additionally, validation errors coming from the backend should also be shown under a corresponding field. Validation errors disappear once the field value has been modified (and does not contain a frontend-checked error anymore). The "Register" action button should be disabled while the form is empty or contains validation errors.
 
-The login link should lead to the **login page**.
+The login link should lead to the login page.
 
 ### 4-6-2 Login Procedure
 
@@ -52,9 +51,9 @@ The login page (and the menu) should be available to unauthenticated users only.
 
 Form validation and behavior should be like the form described in the "Registration Procedure" section – all fields are required, email should be valid, "Login" button should be disabled until there are no validation errors.
 
-**On a successful login, the frontend should redirect the user to the Search page and change the visual appearance of all elements according to a new auth state (described below).**
+On a successful login, the frontend should redirect the user to the Search page and change the visual appearance of all elements according to a new auth state (described below).
 
-The Register link should lead to the **registration page**.
+The Register link should lead to the registration page.
 
 ### 4-6-3 Logout Procedure
 
@@ -68,10 +67,9 @@ This menu should be available to authenticated users only. When this option is c
 
 ### 4-6-5 Current auth state
 
-Once the user logs in, the page refresh should not affect the frontend's auth state (until the user logs
-out / deletes his profile)!
-Frontend in the authenticated state must store some profile data (profile, favorites), hence after the
-page is refreshed, the frontend should be able to restore that data. There could be different approaches:
+Once the user logs in, the page refresh should not affect the frontend's auth state (until the user logs out / deletes his profile)!
+Frontend in the authenticated state must store some profile data (profile, favorites), hence after the page is refreshed, the frontend should be able to restore that data. There could be different approaches:
+
    1) "…/me" request.
         This approach suggests the following – once the page is loaded, the frontend immediately issues a specific request to the backend. This includes an additional endpoint (usually "…/me") that tries to authenticate users based on the JWT cookie (if provided) and returns some state (could be current user profile and maybe some other data) that usually has data like the "/login" endpoint.
         If there are no credentials provided (or they have expired/ are invalid) the corresponding response indicates to the frontend that the current state is "unauthenticated".
@@ -124,7 +122,7 @@ If the search results are empty, i.e. no artists match the given query, an error
 
 When a card is hovered, its background color changes as shown below.
 
-When the user is authenticated, the artist card should contain a button with a star icon. If the artist is not in favorites, the star should have no fill. If the artist is in favorites, the star should have a yellow fill. Click on the button toggles the state – adds and removes an artist to/from favorites. This change should be reflected immediately everywhere it is shown (for example, in the Artist Info tab) and trigger the notification logic described in the favorites section below.
+**When the user is authenticated, the artist card should contain a button with a star icon. If the artist is not in favorites, the star should have no fill. If the artist is in favorites, the star should have a yellow fill. Click on the button toggles the state – adds and removes an artist to/from favorites. This change should be reflected immediately everywhere it is shown (for example, in the Artist Info tab) and trigger the notification logic described in the favorites section below.**
 
 When an artist card is clicked, your frontend will do an AJAX call to your backend to get artist details. To get artist details, you must send an artist ID to the backend. For that, you must associate artist IDs with cards, which you can do during initial search by sending artist IDs from your backend to the frontend as a part of the response. Detail view will contain two tabs – "Artist Info" (Selected by default) and "Artworks" Until a response is received from the backend, a spinner is shown for both tabs.
 
@@ -138,11 +136,11 @@ Artist Info tab contains the same information as Assignment 2. It includes artis
 
 The first line contains the name of the artist. Next line contains the nationality of the artist, followed by birth and death days. Notice the "en dash" between dates. Next, the biography is shown. Notice proper paragraph separation and no split words for a line break (See "By 1911-12, Cubism". Original text: "By 1911–12, Cub- ism").
 
-This information corresponds to ["name"], ["birthday"], ["deathday"], ["nationality"] and ["biography"] fields of the artist's endpoint response. Similar to Assignment 2, if any of the fields are empty, you should simply leave them blank.
+This information corresponds to ["name"], ["birthday"], ["deathday"], ["nationality"] and ["biography"] fields of the artist's endpoint response.If any of the fields are empty, you should simply leave them blank.
 
 If content does not fit the screen, the whole page should be scrollable.
 
-**Open description (tabs and their contents) should be restored after the page refresh, however search results should hide, and search input should reset. You should design and implement it the way, one may easily share the description with others (e.g. via socials) by url only (the page url should contain enough information for frontend to restore the page state).**
+Open description (tabs and their contents) should be restored after the page refresh, however search results should hide, and search input should reset. You should design and implement it the way, one may easily share the description with others (e.g. via socials) by url only (the page url should contain enough information for frontend to restore the page state).
 
 **For authenticated users there are two main changes – a "star" button and similar artist section.**
 
@@ -180,21 +178,21 @@ The clear button of the search form brings the page to its initial state. It cle
 
 ## 4-13 Favorites page
 
-**This page is only available to authenticated users.**
+This page is only available to authenticated users.
 
-**While loading, a spinner should be shown. To improve user experience, the list of favorite artists should be maintained, so on navigation from another screen, there should be no loading from the server, hence no spinner. The loading should only occur on page (full) reload.**
+While loading, a spinner should be shown. To improve user experience, the list of favorite artists should be maintained, so on navigation from another screen, there should be no loading from the server, hence no spinner. The loading should only occur on page (full) reload.
 
-**If there are no artist in favorites, a "No favorite artists" message should be shown.**
+If there are no artist in favorites, a "No favorite artists" message should be shown.
 
-**If there are some artists in the list, they should be displayed as cards in the "newest first" order.**
+If there are some artists in the list, they should be displayed as cards in the "newest first" order.
 
-**The Favorite artist card should contain the following information: full name, dates of birth and death, nationality, interactive timer representing relative time of when the artist was added to the favorites and a blurred background image (the same image used on artist card in search results or in the similar artists list).**
+The Favorite artist card should contain the following information: full name, dates of birth and death, nationality, interactive timer representing relative time of when the artist was added to the favorites and a blurred background image (the same image used on artist card in search results or in the similar artists list).
 
-**The Interactive timer is a relative time expressed with words which is auto updated. Some examples: for less than a minute, display "1 second ago"/"n seconds ago"; for more than a minute, but less than an hour display "1 minute ago" / "n minutes ago", etc.**
+The Interactive timer is a relative time expressed with words which is auto updated. Some examples: for less than a minute, display "1 second ago"/"n seconds ago"; for more than a minute, but less than an hour display "1 minute ago" / "n minutes ago", etc.
 
-**The Card should support two interactions:**
+The Card should support two interactions:
 
-1) **On "Remove" button click artist should be removed from the favorites list**
+1) On "Remove" button click artist should be removed from the favorites list
 2) **On card click (except on "remove" button) user should be navigated to the "Artist Details" page with the artist being displayed. Search bar should be empty and there should be no search results. Both tabs should behave identically as they behave after artist details are being shown after search and select.**
 
 ## 4-14 Notifications

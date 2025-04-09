@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Alert } from 'react-bootstrap';
 import { Artist } from '../utils/api';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchResultsProps {
   artists: Artist[];
@@ -9,6 +10,8 @@ interface SearchResultsProps {
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ artists, searchInitiated, setArtistId }) => {
+  const navigate = useNavigate();
+
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
   if (!artists.length) {
@@ -30,11 +33,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({ artists, searchInitiated,
           key={index}
           className={`mx-1 myCard ${activeCard === index ? 'active-card' : ''}`}
           onClick={() => {
-            // Extract artist id from bioUrl
-            // const parts = artist.bioUrl.split('/');
-            // const id = parts[parts.length - 1];
             setArtistId(artist.id);
             setActiveCard(index);
+            // navigate(`/artist/${artist.id}`); // If I do this, the SearchResults will disappear, which should be avoided. 
+            navigate(`/artist/${artist.id}`, { state: { artists, searchInitiated } })
+             // todo: ArtistDetail Page
           }}
         >
           <Card.Img 
@@ -45,7 +48,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ artists, searchInitiated,
             }}
             alt={artist.title}
           />
-          <Card.Body style={{ maxHeight: "45px"}}>
+          <Card.Body style={{ maxHeight: "43px"}}>
             <Card.Title as="div">{artist.title}</Card.Title>
           </Card.Body>
         </Card>

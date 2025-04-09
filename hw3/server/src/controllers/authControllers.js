@@ -8,13 +8,19 @@ const jwtExpiry = 3600; // 1 hour
 
 async function register(req, res) {
   const { fullname, email, password } = req.body;
-  if (!fullname || !email || !password) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  if (!fullname) {
+    return res.status(400).json({ error: 'Fullname is required.' });
+  }
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required.' });
+  }
+  if (!password) {
+    return res.status(400).json({ error: 'Password is required.' });
   }
   try {
     const existingUser = await User.findOne({ email: email.toLowerCase() });
     if (existingUser) {
-      return res.status(400).json({ error: 'Email already registered' });
+      return res.status(400).json({ error: 'User with this email already exists.' });
     }
     // a. Generate Gravatar URL using sha256 hash of the trimmed, lowercased wmail
     // reference: https://nodejs.org/api/crypto.html
@@ -61,17 +67,20 @@ async function register(req, res) {
 
 async function login(req, res) {
   const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ error: "Missing email or password" });
+  if (!email) {
+    return res.status(400).json({ error: "Email is required." });
+  }
+  if (!password) {
+    return res.status(400).json({ error: "Password is Required." });
   }
   try {
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
-      return res.status(400).json({ error: 'Invalid email or password' });
+      return res.status(400).json({ error: 'Password or email is incorrect.' });
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(400).json({ error: 'Invalid email or password' });
+      return res.status(400).json({ error: 'Password or email is incorrect.' });
     }
     // Create JWT token
     const tokenPayload = { userId: user._id, email: user.email };
@@ -111,16 +120,22 @@ async function deleteAccount(req, res) {
 }
 
 async function getMe(req, res) {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ error: 'Not authenticated' });
+  }
   try {
-    const userId = req.user.userId;
-    const user = await User.findById(userId).select('-password');
+    // Verify the token and get the payload
+    const payload = jwt.verify(token, jwtSecret);
+    // Look up the user by ID, excluding the password field
+    const user = await User.findById(payload.userId).select('-password');
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'User not found.' });
     }
-    res.json({ user });
-  } catch (error) {
-    console.error("Error in getMe:", error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.json(user);
+  } catch (err) {
+    console.error('Error in getMe:', err);
+    res.status(401).json({ error: 'Invalid token' });
   }
 }
 

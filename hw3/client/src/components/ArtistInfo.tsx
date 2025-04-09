@@ -12,7 +12,10 @@ const ArtistInfo: React.FC<ArtistInfoProps> = ({ artistInfo }) => {
         {artistInfo.name}
       </p>
       <p className="text-center" style={{ fontSize: '16px' }}>
-        {artistInfo.nationality}, {artistInfo.birthday} - {artistInfo.deathday}
+        {artistInfo.nationality ? artistInfo.birthday ? artistInfo.deathday ? 
+        `${artistInfo.nationality}, ${artistInfo.birthday} - ${artistInfo.deathday}`:
+        <></> : <></> : <></>
+        }
       </p>
       {artistInfo.biography.split(/\n\s*\n/).map((paragraph, index) => (
         <p key={index} style={{ fontSize: '14px', lineHeight: 1.2, textAlign: 'justify' }}>
