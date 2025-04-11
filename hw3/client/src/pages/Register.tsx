@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { registerUser } from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Form, Button, Container } from 'react-bootstrap';
 
@@ -8,6 +9,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const { setUser } = useAuth();
   const navigate = useNavigate();
 
   const validateFields = () => {
@@ -35,8 +37,9 @@ const Register = () => {
     }
     setErrors({});
     try {
-      await registerUser(fullname, email, password);
-      navigate('/user/login');
+      const userData = await registerUser(fullname, email, password);
+      setUser(userData);
+      navigate('/');
     } catch (err: any) {
       if (err.error) {
         const errorMsg = err.error;
@@ -58,64 +61,66 @@ const Register = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <h2>Register</h2>
-      <Form onSubmit={handleRegister} noValidate>
-        <Form.Group controlId="formFullname">
-          <Form.Label>Full Name</Form.Label>
-          <Form.Control
-            type="text"
-            value={fullname}
-            onChange={(e) => setFullname(e.target.value)}
-            placeholder="Enter full name"
-            isInvalid={!!errors.fullname}
-            required
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.fullname}
-          </Form.Control.Feedback>
-        </Form.Group>
+    <div className='d-flex flex-column align-items-center justify-content-center'>
+      <Container className="mt-5 login-container border rounded">
+        <h2>Register</h2>
+        <Form onSubmit={handleRegister} noValidate>
+          <Form.Group controlId="formFullname">
+            <Form.Label>Full Name</Form.Label>
+            <Form.Control
+              type="text"
+              value={fullname}
+              onChange={(e) => setFullname(e.target.value)}
+              placeholder="Enter full name"
+              isInvalid={!!errors.fullname}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.fullname}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-        <Form.Group controlId="formEmail" className="mt-3">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-            isInvalid={!!errors.email}
-            required
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.email}
-          </Form.Control.Feedback>
-        </Form.Group>
+          <Form.Group controlId="formEmail" className="mt-3">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email"
+              isInvalid={!!errors.email}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.email}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-        <Form.Group controlId="formPassword" className="mt-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            isInvalid={!!errors.password}
-            required
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.password}
-          </Form.Control.Feedback>
-        </Form.Group>
-        
-        {errors.general && <div className="text-danger mt-3">{errors.general}</div>}
+          <Form.Group controlId="formPassword" className="mt-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              isInvalid={!!errors.password}
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.password}
+            </Form.Control.Feedback>
+          </Form.Group>
+          
+          {errors.general && <div className="text-danger mt-3">{errors.general}</div>}
 
-        <Button variant="primary" type="submit" className="mt-3">
-          Register
-        </Button>
-        <p className="mt-3">
-          Already have an account? <Link to="/user/login">Login here</Link>
-        </p>
-      </Form>
-    </Container>
+          <Button variant="primary" type="submit" className="mt-3">
+            Register
+          </Button>
+        </Form>
+      </Container>
+      <p className="mt-3">
+        Already have an account? <Link to="/user/login" className='links'>Login</Link>
+      </p>
+    </div>
   );
 };
 

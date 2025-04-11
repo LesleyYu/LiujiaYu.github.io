@@ -18,7 +18,6 @@ const Navbar = () => {
           {isAuthenticated ? (
             <>
               <Nav.Link className='px-4' as={NavLink} to="user/favorites">Favorites</Nav.Link>
-              {/* <Nav.Link onClick={logout}>users profile picture here {user.fullname} dropdown menu</Nav.Link> */}
               <ProfileDropdown />
             </>
           ) : (<>

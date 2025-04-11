@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve static files from the 'public' dir  within the server folder
-app.use(express.static(path.join(__dirname, './dist')));
+app.use(express.static(path.join(__dirname, './static')));
 
 // routers
 var artsyRouter = require('./src/routes/artsyRoutes');
@@ -52,7 +52,7 @@ app.use('/api/', artsyRouter);
 // "Catchall" route: for any request that doesn’t match an API route,
 // send back React's index.html file from the "public" folder.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, './static', 'index.html'));
 });
 
 // ====== Static File Routes end ===== 
