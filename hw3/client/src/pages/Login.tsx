@@ -56,7 +56,8 @@ const Login = () => {
   };
 
   return (
-    <Container className="mt-5">
+    <div className='d-flex flex-column align-items-center justify-content-center'>
+    <Container className="mt-5 login-container border rounded" >
       <h2>Login</h2>
       <Form onSubmit={handleLogin} noValidate>
         <Form.Group controlId="formEmail">
@@ -93,11 +94,12 @@ const Login = () => {
         <Button variant="primary" type="submit" className="mt-3">
           Login
         </Button>
-        <p className="mt-3">
-          New user? <Link to="/user/register">Register here</Link>
-        </p>
       </Form>
     </Container>
+    <p className="mt-3">
+      Don't have an account yet? <Link to="/user/register" className='links'>Register</Link>
+    </p>
+    </div>
   );
 };
 

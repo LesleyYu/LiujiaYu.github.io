@@ -41,7 +41,6 @@ export const searchArtist = async (query: string): Promise<Artist[]> => {
 export const getArtistInfo = async (id: string): Promise<ArtistInfoType> => {
   const response = await fetch(`/api/artist/${encodeURIComponent(id)}`);
   const data = await response.json();
-  console.log("Artist Info:", data);
   return data;
 };
 
@@ -85,6 +84,7 @@ export const registerUser = async (
   });
   const data = await res.json();
   if (!res.ok) throw data;
+  console.log("Register response:", data);
   return data;
 
   // console.log('Status:', res.status); // Check status
@@ -115,6 +115,7 @@ export const loginUser = async (email: string, password: string) => {
   });
   const data = await res.json();
   if (!res.ok) throw data;
+  console.log("Login response:", data);
   return data.user;
 };
 
@@ -136,6 +137,7 @@ export const getCurrentUser = async (): Promise<UserProfile | null> => {
     console.error("getCurrentUser failed:", res.status, errorText);
     return null;
   }
+  console.log("getCurrentUser response:", res.json);
   return res.json();
 };
 

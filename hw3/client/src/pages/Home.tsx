@@ -1,21 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom'; // todo: ArtistDetail Page
-import { Artist, searchArtist } from '../utils/api';
+import { Artist, getCurrentUser, searchArtist } from '../utils/api';
 import SearchBar from '../components/SearchBar';
 import SearchResults from '../components/SearchResults';
 import ArtistDetails from '../components/ArtistDetails';
+import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
-   // for: ArtistDetail Page
-  const location = useLocation();
+  const { setUser } = useAuth();  // set User when in Home. Prevent no profile in navbar after registration
+  const location = useLocation(); // for: ArtistDetail Page
+  const navigate = useNavigate();
   const searchState = location.state as { artists?: Artist[], searchInitiated?: boolean } | undefined;
   const { artistId } = useParams<{ artistId: string }>();
-  const navigate = useNavigate();
 
   const [artists, setArtists] = useState<Artist[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchInitiated, setSearchInitiated] = useState(false);
-  // const [artistId, setArtistId] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const userData = await getCurrentUser();
+        if (userData) {
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchUser();
+  }, []);
 
   const handleSearch = async (query: string) => {
     setLoading(true);
