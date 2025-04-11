@@ -3,7 +3,7 @@
 **/.github
 **/*.txt
 **/package-lock.json
-**/build
+**/*.zip
 
 **/prompts.*
 

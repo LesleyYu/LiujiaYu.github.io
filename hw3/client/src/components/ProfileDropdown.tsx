@@ -1,18 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import { Dropdown, Image } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 import { deleteUserAccount } from '../utils/api';
 
 const ProfileDropdown = () => {
   const { user, logout, setUser } = useAuth();
   const navigate = useNavigate();
+  const { addNotification } = useNotification();
 
   // Handler for logging out
   const handleLogout = async () => {
     try {
       await logout();
       // Redirect to Search page (or home) when logged out
-      navigate('/');
+        addNotification({ message: 'Logged out', variant: 'success' });
+        navigate('/');
     } catch (err) {
       console.error(err);
     }
@@ -23,14 +26,15 @@ const ProfileDropdown = () => {
     try {
       await deleteUserAccount();
       setUser(null); // Clear auth state
-      navigate('/');
+        addNotification({ message: 'Account deleted', variant: 'danger' });
+        navigate('/');
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <Dropdown align="end">
+    <Dropdown align="end" className='d-flex justify-content-center'> 
       <Dropdown.Toggle
         variant="light"
         id="dropdown-basic"

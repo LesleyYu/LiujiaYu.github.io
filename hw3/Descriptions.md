@@ -1,9 +1,9 @@
 ## 4-6 Authentication
 
-The project should support two types of clients: Guests and Authenticated users. **Part of the functionality will be available (and visible) only to users that are logged in. In short, authenticated users can (in addition to guest users’ privileges):**
+The project should support two types of clients: Guests and Authenticated users. Part of the functionality will be available (and visible) only to users that are logged in. In short, authenticated users can (in addition to guest users’ privileges):
 
-1) **See "similar artists" section**
-2) **Have a favorite list of artists (separate favorites page and add/remove buttons)**
+1) See "similar artists" section
+2) Have a favorite list of artists (separate favorites page and add/remove buttons)
 
 You will need to implement 4 actions (endpoints):
 
@@ -142,11 +142,11 @@ If content does not fit the screen, the whole page should be scrollable.
 
 Open description (tabs and their contents) should be restored after the page refresh, however search results should hide, and search input should reset. You should design and implement it the way, one may easily share the description with others (e.g. via socials) by url only (the page url should contain enough information for frontend to restore the page state).
 
-**For authenticated users there are two main changes – a "star" button and similar artist section.**
+For authenticated users there are two main changes – a "star" button and similar artist section.
 
-**The "star" button should behave like the "star" button on an artist card.**
+The "star" button should behave like the "star" button on an artist card.
 
-**Under the description with biography there should be a block titled "Similar Artists". Please use the corresponding artsy endpoint to get the list from your backend. Similar artists should be displayed in the form of cards that should look and behave exactly as artist cards in the search result section. You can use the same frontend components. Upon click (except on the star button), they should change the content of sections above to the artist from the card. Leave search results unchanged (but reset selected state if description does not match the artist currently being displayed).**
+Under the description with biography there should be a block titled "Similar Artists". Please use the corresponding artsy endpoint to get the list from your backend. Similar artists should be displayed in the form of cards that should look and behave exactly as artist cards in the search result section. You can use the same frontend components. Upon click (except on the star button), they should change the content of sections above to the artist from the card. Leave search results unchanged (but reset selected state if description does not match the artist currently being displayed).
 
 ### 4-11-2 Artworks Tab
 
@@ -193,19 +193,20 @@ The Interactive timer is a relative time expressed with words which is auto upda
 The Card should support two interactions:
 
 1) On "Remove" button click artist should be removed from the favorites list
-2) **On card click (except on "remove" button) user should be navigated to the "Artist Details" page with the artist being displayed. Search bar should be empty and there should be no search results. Both tabs should behave identically as they behave after artist details are being shown after search and select.**
+2) On card click (except on "remove" button) user should be navigated to the "Artist Details" page with the artist being displayed. Search bar should be empty and there should be no search results. Both tabs should behave identically as they behave after artist details are being shown after search and select.
 
 ## 4-14 Notifications
 
-**Application should show confirmation in form of a top-right corner stackable notification for the following actions (with corresponding text and bootstrap style):**
+Application should show confirmation in form of a top-right corner stackable notification for the following actions (with corresponding text and bootstrap style):
 
-1) **add to favorites – "Added to favorites" (style = success)**
-2) **remove from favorites – "Removed from favorites" (style = danger)**
-3) **logout – "Logged out" (style = success)**
-4) **profile deletion – "Account deleted" (style = danger)**
+1) add to favorites – "Added to favorites" (style = success)
+2) remove from favorites – "Removed from favorites" (style = danger)
+3) logout – "Logged out" (style = success)
+4) profile deletion – "Account deleted" (style = danger)
 
-**Notifications should be shown regardless of where the action has been made. These notifications should be visible for 3 seconds and automatically removed afterwards. In addition user may click "X" button on the right part of the notification to manually remove it. Notifications should stack vertically with the last notification triggered being on the bottom of the stack and the earliest being on the top. The stack grows from the top to the bottom of the page and persists between page navigations (not page reloads).**
+Notifications should be shown regardless of where the action has been made. These notifications should be visible for 3 seconds and automatically removed afterwards. In addition user may click "X" button on the right part of the notification to manually remove it. Notifications should stack vertically with the last notification triggered being on the bottom of the stack and the earliest being on the top. The stack grows from the top to the bottom of the page and persists between page navigations (not page reloads).
 
 ## Responsive Design (front-end)
 
-**The webpage you develop must be responsive. All functions should work on mobile devices.**
+页面变中等大小的时候，favoriteCard会重叠
+

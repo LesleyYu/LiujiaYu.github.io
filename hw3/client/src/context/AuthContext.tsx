@@ -6,7 +6,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   loading: boolean;
   logout: () => Promise<void>;
-  setUser: (user: UserProfile | null) => void;
+  setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     async function fetchUser() {
       try {
         const userData = await getCurrentUser();
-        // console.log("Fetched user data:", userData); // normal
         if (userData) {
           setUser(userData);
         }
