@@ -5,6 +5,12 @@ export interface Artist {
   id: string;
 }
 
+export interface SimilarArtist {
+  imgUrl: string;
+  name: string;
+  id: string;
+}
+
 export interface ArtistInfoType {
   name: string;
   birthday: string;
@@ -27,25 +33,32 @@ export interface Category {
 
 export const searchArtist = async (query: string): Promise<Artist[]> => {
   // 这里的冒号表示 本匿名函数使用了 Promise接口，Promise接口内的类型变量是 Artist[]
-  const response = await fetch(`/search/${encodeURIComponent(query)}`);
+  const response = await fetch(`/api/search/${encodeURIComponent(query)}`);
   const data = await response.json();
   return data.artists;
 };
 
 export const getArtistInfo = async (id: string): Promise<ArtistInfoType> => {
-  const response = await fetch(`/artist/${encodeURIComponent(id)}`);
+  const response = await fetch(`/api/artist/${encodeURIComponent(id)}`);
   const data = await response.json();
+  console.log("Artist Info:", data);
   return data;
 };
 
+export const getSimilarArtists = async (artistId: string): Promise<SimilarArtist[]> => {
+  const response = await fetch(`/api/similar/${encodeURIComponent(artistId)}`);
+  const data = await response.json();
+  return data.artists;
+};
+
 export const getArtWorks = async (artistId: string): Promise<Artwork[]> => {
-  const response = await fetch(`/artworks/${encodeURIComponent(artistId)}`);
+  const response = await fetch(`/api/artworks/${encodeURIComponent(artistId)}`);
   const data = await response.json();
   return data.artworks;
 };
 
 export const getCategories = async (artworkId: string): Promise<Category[]> => {
-  const response = await fetch(`/genes/${encodeURIComponent(artworkId)}`);
+  const response = await fetch(`/api/genes/${encodeURIComponent(artworkId)}`);
   const data = await response.json();
   return data.genes;
 };
@@ -57,6 +70,7 @@ export interface UserProfile {
   fullname: string;
   email: string;
   profileImageUrl: string;
+  favorites: Favorite[];
 }
 
 export const registerUser = async (
@@ -64,7 +78,7 @@ export const registerUser = async (
   email: string,
   password: string
 ) => {
-  const res = await fetch("/user/register", {
+  const res = await fetch("/api/user/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ fullname, email, password }),
@@ -93,7 +107,7 @@ export const registerUser = async (
 };
 
 export const loginUser = async (email: string, password: string) => {
-  const res = await fetch("/user/login", {
+  const res = await fetch("/api/user/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -105,18 +119,18 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 export const logoutUser = async () => {
-  await fetch("/user/logout", { method: "POST", credentials: "include" });
+  await fetch("/api/user/logout", { method: "POST", credentials: "include" });
 };
 
 export const deleteUserAccount = async () => {
-  await fetch("/user/delete-account", {
+  await fetch("/api/user/delete-account", {
     method: "DELETE",
     credentials: "include",
   });
 };
 
 export const getCurrentUser = async (): Promise<UserProfile | null> => {
-  const res = await fetch("/user/me", { credentials: "include" });
+  const res = await fetch("/api/user/me", { credentials: "include" });
   if (!res.ok) {
     const errorText = await res.text();
     console.error("getCurrentUser failed:", res.status, errorText);
@@ -137,7 +151,7 @@ export interface Favorite {
 
 // et the user's favorites list
 export const getFavorites = async (): Promise<Favorite[]> => {
-  const response = await fetch("/user/favorites", { credentials: "include" });
+  const response = await fetch("/api/user/favorites", { credentials: "include" });
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Failed to fetch favorites: ${errorText}`);
@@ -149,7 +163,7 @@ export const getFavorites = async (): Promise<Favorite[]> => {
 
 // remove an artist from favorites
 export const removeFavorite = async (artistId: string): Promise<Favorite[]> => {
-  const response = await fetch(`/user/favorites/${artistId}`, {
+  const response = await fetch(`/api/user/favorites/${artistId}`, {
     method: "DELETE",
     credentials: "include",
   });
@@ -164,13 +178,15 @@ export const removeFavorite = async (artistId: string): Promise<Favorite[]> => {
 };
 
 // add an artist to favorites
-export const addFavorite = async (
-  artistId: string,
-  title: string,
-  bioUrl: string,
-  imgUrl: string
-): Promise<Favorite[]> => {
-  const response = await fetch(`/user/favorites/${artistId}`, {
+export const addFavorite = async (artistId: string): Promise<Favorite[]> => {
+  // get artist details for adding to database
+  const detailResponse = await fetch(`/api/artist/${encodeURIComponent(artistId)}`);
+  const detail = await detailResponse.json();
+  const title = detail.name;
+  const { bioUrl, imgUrl} = detail;
+
+  // adding fav artist details to databse
+  const response = await fetch(`/api/user/favorites/${artistId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

@@ -86,16 +86,20 @@ async function getArtistDetail(req, res) {
     });
     if (response.ok) {
       const data = await response.json();
-      // const filteredData = {
-      //   name: data.name,
-      //   birthday: data.birthday,
-      //   deathday: data.deathday,
-      //   nationality: data.nationality,
-      //   biography: data.biography
-      //   bioUrl: ...
-      // };
-      // res.json(filteredData);
-      res.json(data);
+      console.log('In server artsy controller, getArtistDetails, bioUrl:', data._links.self.href);
+      const filteredData = {
+        id: data.id,
+        name: data.name,
+        birthday: data.birthday,
+        deathday: data.deathday,
+        nationality: data.nationality,
+        biography: data.biography,
+        bioUrl: data._links.self.href,
+        imgUrl: data._links.thumbnail ? data._links.thumbnail.href : "/image/artsy_logo.svg",
+        genes: data._links.genes ? data._links.genes.href : null,
+        similar_artists: data._links.similar_artists ? data._links.similar_artists.href : null,
+      };
+      res.json(filteredData);
     } else {
       const errorText = await response.text();
       res.status(response.status).json({ error: 'Failed to fetch data', details: errorText });

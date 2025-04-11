@@ -27,42 +27,19 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// serve static files from the 'public' dir
-app.use(express.static(path.join(__dirname, 'public')));
+
+// serve static files from the 'public' dir  within the server folder
+app.use(express.static(path.join(__dirname, './dist')));
 
 // routers
 var artsyRouter = require('./src/routes/artsyRoutes');
 var apiRouter = require('./src/routes/apiRoutes');
-app.use('/', artsyRouter);
-app.use('/user', apiRouter);
+// Mount API routes first (so these are handled before serving the SPA)
+app.use('/api/user', apiRouter);
+app.use('/api/', artsyRouter);
 
 // ====== Static File Routes ===== 
-// --- a. Serve static files from the view directory (Removed) (Originally in routes_depr/index.js.) ---
-
-// // Homepage route - serve index.html from public folder
-// router.get('/', (req, res) => {
-//   const options = { root: path.join(__dirname, '../../public') };
-//   res.sendFile('index.html', options, (err) => {
-//     if (err) {
-//       console.error(err);
-//       res.send('Welcome to the Artist Search API');
-//     }
-//   });
-// });
-
-// // Catch-all for static files in the public directory
-// // (This come after the API routes to avoid conflicts)
-// router.get('/*', (req, res) => {
-//   const fileName = req.params[0];
-//   const options = { root: path.join(__dirname, '../../public') };
-//   res.sendFile(fileName, options, (err) => {
-//     if (err) {
-//       res.status(404).json({ error: 'File not found' });
-//     }
-//   });
-// });
-
-// // --- b. Serve static files from the React app build directory ---
+// // --- Serve static files from the React app build directory ---
 // app.use(express.static(path.join(__dirname, '../client/build')));
 
 // // The "catchall" handler: for any request that doesn't match an API route, send back React's index.html file.
@@ -72,13 +49,10 @@ app.use('/user', apiRouter);
 // const PORT = process.env.PORT || 8080;
 // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// Serve static files from the "public" directory within the server folder
-app.use(express.static(path.join(__dirname, 'public')));
-
 // "Catchall" route: for any request that doesn’t match an API route,
 // send back React's index.html file from the "public" folder.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
 // ====== Static File Routes end ===== 

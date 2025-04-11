@@ -28,25 +28,33 @@ body {
   min-width: 200px !important;  // if the class is not defined in bootstrap, you need to use !important
   cursor: pointer !important;
   &:hover {
-    background-color: rgb(47, 118, 179) !important;
+    background-color: $primary-color !important;
   }
 }
 
 .myCard.active-card {   // why?
-  background-color: #205375 !important;
+  background-color:  $primary-color !important;
+}
+
+.myFavIcon {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.myFavIconOnCard {
+  background-color: $secondary-color !important;
 }
 
 // ---- Artist Info ----
 #info-spinner { // .spinner-border {
-  color: #205375;
+  color: $primary-color; // #205375;
 }
 
 .container-fluid .container .nav.nav-pills.nav-fill  {
   button.nav-link {
-    color: #205375
+    color: $primary-color; // #205375;
   }
   button.nav-link.active {
-    background-color: #205375;
+    background-color: $primary-color; // #205375;
     color: white;
   }
 }
