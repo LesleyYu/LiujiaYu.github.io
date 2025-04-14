@@ -17,7 +17,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ artists, searchInitiated,
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
   useEffect(() => {
-    if (currentArtistId && activeCard !== null && artists[activeCard].id !== currentArtistId) {
+    if (currentArtistId && activeCard && artists[activeCard].id !== currentArtistId) {
       const index = artists.findIndex(artist => artist.id === currentArtistId);
       setActiveCard(index);
     }
@@ -44,8 +44,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ artists, searchInitiated,
           className={`mx-1 border-0 myCard ${activeCard === index ? 'active-card' : ''}`}
           onClick={() => {
             setActiveCard(index);
-            //  ArtistDetail Page
-            navigate(`/artist/${artist.id}`, { state: { artists, searchInitiated } })
+            //  ArtistDetail Page with preserved search state so SearchResults remain
+            navigate(`/artist/${artist.id}`, { state: { artists, searchInitiated, preserveSearch: true } });
           }}
         >
           <Card.Img

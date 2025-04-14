@@ -9,6 +9,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const { setUser } = useAuth();
   const navigate = useNavigate();
 
@@ -16,14 +17,18 @@ const Register = () => {
     const newErrors: { [key: string]: string } = {};
     if (!fullname.trim()) {
       newErrors.fullname = "Fullname is required.";
+      setIsDisabled(true);
     }
     if (!email.trim()) {
       newErrors.email = "Email is required.";
+      setIsDisabled(true);
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       newErrors.email = "Email must be valid.";
+      setIsDisabled(true);
     }
     if (!password) {
       newErrors.password = "Email is required.";
+      setIsDisabled(true);
     }
     return newErrors;
   };
@@ -51,9 +56,7 @@ const Register = () => {
           setErrors({ password: errorMsg });
         } else if (errorMsg === "User with this email already exists.") {
           setErrors({ email: errorMsg });
-        } else {
-          setErrors({ general: 'Registration failed' });
-        }
+        } 
       } else {
         setErrors({ general: 'Registration failed' });
       }
@@ -70,7 +73,10 @@ const Register = () => {
             <Form.Control
               type="text"
               value={fullname}
-              onChange={(e) => setFullname(e.target.value)}
+              onChange={(e) => {
+                setFullname(e.target.value);
+                setIsDisabled(false);
+              }}
               placeholder="Enter full name"
               isInvalid={!!errors.fullname}
               required
@@ -85,7 +91,10 @@ const Register = () => {
             <Form.Control
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setIsDisabled(false);
+              }}
               placeholder="Enter email"
               isInvalid={!!errors.email}
               required
@@ -100,7 +109,10 @@ const Register = () => {
             <Form.Control
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setIsDisabled(false);
+              }}
               placeholder="Password"
               isInvalid={!!errors.password}
               required
@@ -112,7 +124,7 @@ const Register = () => {
           
           {errors.general && <div className="text-danger mt-3">{errors.general}</div>}
 
-          <Button variant="primary" type="submit" className="mt-3">
+          <Button variant="primary" type="submit" className="mt-3" disabled={isDisabled}>
             Register
           </Button>
         </Form>
