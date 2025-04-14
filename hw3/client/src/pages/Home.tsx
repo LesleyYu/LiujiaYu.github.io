@@ -10,7 +10,11 @@ const Home = () => {
   const { setUser } = useAuth();  // set User when in Home. Prevent no profile in navbar after registration
   const location = useLocation(); // for: ArtistDetail Page
   const navigate = useNavigate();
-  const searchState = location.state as { artists?: Artist[], searchInitiated?: boolean } | undefined;
+  const searchState = location.state as { 
+    artists?: Artist[], 
+    searchInitiated?: boolean,
+    preserveSearch?: boolean
+  } | undefined;
   const { artistId } = useParams<{ artistId: string }>();
 
   const [artists, setArtists] = useState<Artist[]>([]);
@@ -33,9 +37,18 @@ const Home = () => {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    if (artistId && searchState?.preserveSearch !== true) {
+      setArtists([]);
+    }
+  }, [artistId, searchState]);
+
   const handleSearch = async (query: string) => {
     setLoading(true);
     setSearchInitiated(true);
+    if (artistId) {
+      navigate('/');
+    }
     try {
       const results = await searchArtist(query);
       setArtists(results);
@@ -59,24 +72,22 @@ const Home = () => {
         }}
       />
 
-      {/* when on root path (!artistiId), show search results if any */}
-      {
-        !artistId && artists.length > 0 && !loading &&
-          <SearchResults artists={artists} searchInitiated={searchInitiated}
-          />
-      }
+      {(
+        // Render SearchResults only when:
+        // - No artistId: display search results from local state if any.
+        // - ArtistDetails view with preserved search state: display search results passed via location.state.
+        (!artistId && artists.length > 0 && !loading) ||
+        (artistId && searchState?.preserveSearch === true && searchState?.artists && searchState?.artists.length > 0)
+      ) && (
+        <SearchResults 
+          artists={ artistId ? searchState?.artists ?? [] : artists}
+          searchInitiated={ artistId ? searchState?.searchInitiated ?? false : searchInitiated }
+          currentArtistId={artistId ? artistId : undefined}
+        />
+      )}
 
       {artistId && (
-        <>
-          { searchState && (
-            <SearchResults 
-              artists={searchState.artists || []}
-              searchInitiated={searchState.searchInitiated || false}
-              currentArtistId={artistId}
-            />
-          )}
-          <ArtistDetails artistId={artistId}/>
-        </>
+        <ArtistDetails artistId={artistId} />
       )}
     </div>
   );

@@ -86,7 +86,7 @@ async function getArtistDetail(req, res) {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log('In server artsy controller, getArtistDetails, bioUrl:', data._links.self.href);
+      // console.log('In server artsy controller, getArtistDetails, bioUrl:', data._links.self.href);
       const filteredData = {
         id: data.id,
         name: data.name,

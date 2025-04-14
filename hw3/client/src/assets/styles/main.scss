@@ -70,6 +70,14 @@ body {
 }
 
 
+// ==== favorite page ====
+.favorites-page.py-4 {
+  .spinner-border {
+    color: $primary-color !important; // #205375;
+  }
+}
+
+
 
 // ---- Footer ----
 .footer {

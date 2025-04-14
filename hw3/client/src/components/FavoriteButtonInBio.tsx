@@ -24,14 +24,12 @@ const FavoriteButtonInBio: React.FC<FavoriteButtonProps> = ({ artistId }) => {
     try {
       if (isFavorited) {
         // Remove from favorites
-        // console.log('Removing from favorites:', artistId);
         const updatedFavorites = await removeFavorite(artistId);
         // Update user state with new favorites list.
         setUser((prevUser) => prevUser ? { ...prevUser, favorites: updatedFavorites } : prevUser);
         addNotification({ message: 'Removed from favorites', variant: 'danger' });
       } else {
         // Add to favorites
-        // console.log('Adding from favorites:', artistId);
         const updatedFavorites = await addFavorite(artistId);
         // Update user state with new favorites list.
         setUser((prevUser) => prevUser ? { ...prevUser, favorites: updatedFavorites } : prevUser);
