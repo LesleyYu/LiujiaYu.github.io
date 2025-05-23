@@ -1,2 +1,14 @@
-runtime: custom
-env: flex
+# runtime: custom
+# env: flex
+
+runtime: nodejs18
+
+instance_class: F1
+
+automatic_scaling:
+  min_idle_instances: 0
+  max_idle_instances: 1
+
+handlers:
+  - url: /.*
+    script: auto
