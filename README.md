@@ -12,7 +12,6 @@ Fullstack Artist Searching Platform — University of Southern California (USC),
 - **Assignment #2 Cloud Service (example):**: https://csci571-hw2-451506.uc.r.appspot.com/search/picasso
 - **Assignment #3 Home Page:**: https://csci571-hw3-456211.wl.r.appspot.com
 - **Assignment #3 Cloud Service (example):**: https://csci571-hw3-456211.wl.r.appspot.com/api/search/picasso
-- **Assignment #4 Cloud Service :**: `placeholder link`
 
 **Features & Implementation Highlights:**
 - **Authentication:**: JSON Web Tokens (JWT) with server-side session management and protected API routes.
@@ -41,6 +40,8 @@ Note: Exact commands depend on which subproject or assignment snapshot you want 
 
 **Deployment Notes:**
 - Services are containerized with Docker and designed to run on GCP (Cloud Run / App Engine / GKE). Use environment variables for secrets (JWT secret, MongoDB URI, API keys).
+
+(MongoDB: use usc account browser)
 
 **Contact / Attribution:**
 - **Author:**: Lesley Yu — USC CSCI571 coursework (Jan 2025 — May 2025).
