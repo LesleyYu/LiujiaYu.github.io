@@ -1,4 +1,3 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -21,6 +20,10 @@ connectDB();
 // view engine setup
 app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'pug');
+
+// request-scoped context (request id + start time) — must run first
+var { attachRequestContext } = require('./src/middleware/requestContext');
+app.use(attachRequestContext);
 
 // middlewares
 app.use(logger('dev'));
@@ -58,21 +61,12 @@ app.get('*', (req, res) => {
 // ====== Static File Routes end ===== 
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// catch 404 and forward to the centralized error handler
+var { notFoundHandler, centralizedErrorHandler } = require('./src/middleware/errorHandler');
+app.use(notFoundHandler);
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+// centralized error handler — contextual logging, operational/programmer split, JSON/HTML negotiation
+app.use(centralizedErrorHandler);
 
 if (require.main === module) {
   const PORT = process.env.PORT || 8080;
