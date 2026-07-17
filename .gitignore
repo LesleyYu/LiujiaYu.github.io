@@ -1,4 +1,5 @@
 **/.DS_Store
+**/.env
 **/node_modules
 **/.github
 **/*.txt
@@ -17,3 +18,6 @@
 hw3/Descriptions.md
 hw3/prompts_client.md
 hw3/prompts_server.md
+
+claude.md
+claude_instructions/
