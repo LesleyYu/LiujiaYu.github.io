@@ -45,9 +45,10 @@ const Register = () => {
       const userData = await registerUser(fullname, email, password);
       setUser(userData);
       navigate('/');
-    } catch (err: any) {
-      if (err.error) {
-        const errorMsg = err.error;
+    } catch (err) {
+      const apiError = err as { error?: string };
+      if (apiError.error) {
+        const errorMsg = apiError.error;
         if (errorMsg === "Fullname is required.") {
           setErrors({ fullname: errorMsg });
         } else if (errorMsg === "Email is required.") {

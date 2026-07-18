@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('node:crypto');
 
-const jwtSecret = process.env.JWT_SECRET || 'fallbackSecret';
+const jwtSecret = process.env.JWT_SECRET // || 'fallbackSecret';
 const jwtExpiry = 3600; // 1 hour
 
 async function register(req, res) {

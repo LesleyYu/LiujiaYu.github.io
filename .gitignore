@@ -21,3 +21,15 @@ hw3/prompts_server.md
 
 claude.md
 claude_instructions/
+
+# --- hw3 CI essentials: re-included so GitHub Actions can run ---
+# .github is excluded as a directory above, so re-include the dir first, then its contents.
+!/.github/
+!/.github/workflows/
+!/.github/workflows/**
+# commit hw3 lockfiles so CI can use `npm ci`
+!hw3/server/package-lock.json
+!hw3/client/package-lock.json
+# commit hw3 server tests (line `**/*test*` would otherwise ignore them)
+!hw3/server/test/
+!hw3/server/test/**

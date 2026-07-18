@@ -54,9 +54,8 @@ function logError(req, err, status, operational) {
   console.error(err.stack);
 }
 
-// Centralized Express error handler (registered last). Logs request-scoped context, distinguishes
-// operational vs programmer errors, and negotiates the response: JSON for API/JSON clients, the pug
-// error page otherwise. Never leaks internal messages/stacks for programmer errors in production.
+// Centralized Express error handler (registered last). Logs request-scoped context, distinguishes operational vs programmer errors, and negotiates the response: 
+// JSON for API/JSON clients, the pug error page otherwise. Never leaks internal messages/stacks for programmer errors in production.
 function centralizedErrorHandler(err, req, res, next) {
   const status = err.status || err.statusCode || 500;
   const operational = isOperationalError(err);

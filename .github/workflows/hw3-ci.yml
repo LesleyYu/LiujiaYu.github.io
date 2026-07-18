@@ -1,0 +1,81 @@
+name: hw3 CI
+
+# This repo is the LiujiaYu.github.io Pages repo; the Artsy web app lives in hw3/.
+# GitHub Actions only runs workflows from <repo-root>/.github/workflows, so this file lives at the repo root but is scoped to changes under hw3/ so it does not run on unrelated Pages commits.
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'hw3/**'
+      - '.github/workflows/hw3-ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'hw3/**'
+      - '.github/workflows/hw3-ci.yml'
+
+jobs:
+  server:
+    name: Server — install, test, docker build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hw3/server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hw3/server/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+      - name: Build Docker image (validation only)
+        run: docker build -t artsy-hw3-server:ci .
+
+  client:
+    name: Client — install, lint, build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hw3/client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hw3/client/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build
+
+  # ---------------------------------------------------------------------------
+  # Optional CD. Deploy is currently a manual/scripted step:
+  #   gcloud app deploy hw3/server/app.yaml        # App Engine
+  #   (or) docker push <image> + gcloud run deploy # Cloud Run
+  #
+  # To turn this into automated deploy, add GCP auth — Workload Identity Federation
+  # (preferred) via google-github-actions/auth, or a service-account key in repo
+  # Secrets — then uncomment and verify it runs green. Until then, do NOT describe
+  # the pipeline as "automated deploy"; it is CI + a scripted deploy.
+  # ---------------------------------------------------------------------------
+  # deploy:
+  #   name: Deploy to GCP App Engine
+  #   needs: [ server, client ]
+  #   if: github.ref == 'refs/heads/main'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: google-github-actions/auth@v2
+  #       with:
+  #         workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+  #         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+  #     - uses: google-github-actions/setup-gcloud@v2
+  #     - run: gcloud app deploy hw3/server/app.yaml --quiet

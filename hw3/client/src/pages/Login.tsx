@@ -36,9 +36,10 @@ const Login = () => {
       const userData = await loginUser(email, password);
       setUser(userData);
       navigate('/');
-    } catch (err: any) {
-      if (err.error) {
-        const errorMsg = err.error;
+    } catch (err) {
+      const apiError = err as { error?: string };
+      if (apiError.error) {
+        const errorMsg = apiError.error;
         if (errorMsg === "Missing email or password") {
           const newErr: { [key: string]: string } = {};
           if (!email) newErr.email = "Email is required.";

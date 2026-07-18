@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const jwtSecret = process.env.JWT_SECRET || 'fallbackSecret';
+const jwtSecret = process.env.JWT_SECRET // || 'fallbackSecret';
 
 
 function authenticateToken(req, res, next) {
